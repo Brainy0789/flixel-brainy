@@ -56,12 +56,12 @@ import openfl.display.OpenGLView;
 using flixel.util.FlxArrayUtil;
 #end
 
-#if html5
-import flixel.system.frontEnds.HTML5FrontEnd;
+#if FLX_CHROMA_SAVE
+import flixel.util.FlxChromaSaveManager;
 #end
 
-#if IS_VS_BRAINY
-import states.MainMenuState;
+#if html5
+import flixel.system.frontEnds.HTML5FrontEnd;
 #end
 
 /**
@@ -746,15 +746,6 @@ class FlxG
 			save.mergeDataFrom("flixel", null, false, false);
 	}
 	#end
-
-	public static function safeReset()
-	{
-		#if IS_VS_BRAINY
-		MusicBeatState.switchState(new MainMenuState());
-		#else
-		resetGame();
-		#end
-	}
 
 	/**
 	 * Called whenever the game is reset, doesn't have to do quite as much work as the basic initialization stuff.

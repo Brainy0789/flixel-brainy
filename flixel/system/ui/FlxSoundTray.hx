@@ -16,6 +16,11 @@ import openfl.text.AntiAliasType;
 import openfl.text.GridFitType;
 #end
 
+#if FLX_CHROMA_SAVE
+import flixel.util.FlxChromaSaveManager;
+#end
+
+
 /**
  * The flixel sound tray, the little volume meter that pops down sometimes.
  * Accessed via `FlxG.game.soundTray` or `FlxG.sound.soundTray`.
@@ -125,8 +130,10 @@ class FlxSoundTray extends Sprite
 			{
 				visible = false;
 				active = false;
-
-				#if FLX_SAVE
+				#if FLX_CHROMA_SAVE
+				FlxG.chromaSave.createSave('flixel'); //just in case
+				FlxG.chromaSave.setField('flixel', 'sound', FlxChromaSaveManager.getSoundData(FlxG.sound.volume, FlxG.sound.muted));
+				#else #if FLX_SAVE
 				// Save sound preferences
 				if (FlxG.save.isBound)
 				{
@@ -134,6 +141,7 @@ class FlxSoundTray extends Sprite
 					FlxG.save.data.volume = FlxG.sound.volume;
 					FlxG.save.flush();
 				}
+				#end
 				#end
 			}
 		}

@@ -15,6 +15,10 @@ import openfl.media.Sound;
 import openfl.utils.AssetType;
 #end
 
+#if FLX_CHROMA_SAVE
+import flixel.util.FlxChromaSaveManager;
+#end
+
 /**
  * Accessed via `FlxG.sound`.
  */
@@ -430,10 +434,32 @@ class SoundFrontEnd
 		}
 	}
 
-	#if FLX_SAVE
+	#if FLX_CHROMA_SAVE
 	/**
 	 * Loads saved sound preferences if they exist.
 	 */
+	function loadSavedPrefs():Void
+	{
+		FlxG.chromaSave.createSave('flixel');
+		
+		if (FlxG.chromaSave.getField('flixel', 'sound') == null)
+		{
+			FlxG.chromaSave.setField('flixel', 'sound', FlxChromaSaveManager.getSoundData(volume, muted));
+			return;
+		}
+
+		if (FlxG.chromaSave.getField('flixel', 'sound').volume != null)
+		{
+			volume = FlxG.chromaSave.getField('flixel', 'sound').volume;
+		}
+
+		if (FlxG.chromaSave.getField('flixel', 'sound').mute != null)
+		{
+			muted = FlxG.chromaSave.getField('flixel', 'sound').mute;
+		}
+	}
+	#else #if FLX_SAVE
+	#end
 	function loadSavedPrefs():Void
 	{
 		if (!FlxG.save.isBound)
@@ -449,26 +475,6 @@ class SoundFrontEnd
 			muted = FlxG.save.data.mute;
 		}
 	}
-	#else #if FLX_CHROMA_SAVE
-	function loadSavedPrefs():Void
-	{
-		if (FlxG.chromaSave.getField('flixel', 'sound') == null)
-		{
-			FlxG.chromaSave.setField('flixel', 'sound', FlxChromaSaveManager.getSoundData(volume, mute));
-			return;
-		}
-
-		if (FlxG.chromaSave.getField('flixel', 'sound').volume != null)
-		{
-			volume = FlxG.chromaSave.getField('flixel', 'sound').volume;
-		}
-
-		if (FlxG.chromaSave.getField('flixel', 'sound').mute != null)
-		{
-			mute = FlxG.chromaSave.getField('flixel', 'sound'). mute;
-		}
-	}
-	#end
 	#end
 
 	function set_volume(Volume:Float):Float

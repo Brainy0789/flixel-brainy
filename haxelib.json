@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": ["game", "openfl", "flash", "html5", "neko", "cpp", "android", "ios", "cross"],
 	"description": "Brainy's fork of HaxeFlixel!",
-	"version": "1.0.0",
+	"version": "5.6.1",
 	"releasenote": "Initial release",
 	"contributors": ["Brainy7890"],
 	"dependencies": {
