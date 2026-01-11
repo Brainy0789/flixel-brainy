@@ -735,7 +735,9 @@ class FlxG
 	#if (FLX_SAVE || FLX_CHROMA_SAVE)
 	static function initSave()
 	{
+		#if FLX_CHROMA_SAVE
 		chromaSave = new FlxChromaSaveManager();
+		#end
 		save = new FlxSave();
 		// Don't init if the FlxG.save.bind was manually called before the FlxGame was created
 		if (save.isBound)
